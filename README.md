@@ -1,2 +1,2 @@
 # app-launcher
-AppLauncher is a Windows utility to allow 3rd-party applications to be called from within a web browser session, e.g. a URL links following the registered protocol can be used to open applications on Windows.
+AppLauncher is a Windows utility to allow 3rd-party applications to be called from within a web browser session, e.g. URL links following the registered protocol can be used to open applications on Windows.
