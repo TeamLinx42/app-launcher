@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AppLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "test"
+    }
+  }
+}
