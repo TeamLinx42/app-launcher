@@ -1,9 +1,11 @@
 ﻿namespace AppLauncher;
 
-internal enum LaunchCommand
+internal enum LaunchCommandType
 {
     Undefined,
     Unknown,
     Register,
-    UnRegister
+    UnRegister,
+    Launch,
+    Test
 }

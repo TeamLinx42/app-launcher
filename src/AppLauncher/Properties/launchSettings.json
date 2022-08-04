@@ -7,6 +7,26 @@
     "Unregister": {
       "commandName": "Project",
       "commandLineArgs": "unregister tlx"
+    },
+    "Test": {
+      "commandName": "Project",
+      "commandLineArgs": "test Hallo Welt!"
+    },
+    "TestLaunch": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe?test?Hallo Welt!\""
+    },
+    "TestLaunch2": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22/?test?Hallo%20Welt!"
+    },
+    "TestLaunch3": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22%20test%20x%20y%20z/"
+    },
+    "TestLaunch4": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe\" \"test x y z\""
     }
   }
 }
