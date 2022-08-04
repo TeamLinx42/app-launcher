@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "AppLauncher": {
+    "Register": {
       "commandName": "Project",
-      "commandLineArgs": "test"
+      "commandLineArgs": "register tlx"
+    },
+    "Unregister": {
+      "commandName": "Project",
+      "commandLineArgs": "unregister tlx"
     }
   }
 }
