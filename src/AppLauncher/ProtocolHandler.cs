@@ -29,35 +29,48 @@ internal static class ProtocolHandler
         var appLauncherLocation = Process.ExeFileName;
         if (appLauncherLocation == null) throw new InvalidOperationException("Unable to get AppLauncher location");
 
-        foreach (var (path, key, value) in ProtocolRegValues(protocolName, appLauncherLocation))
-            SetRegistryKey(Registry.ClassesRoot.Name, path, key, value);
-        logEvent($"Protocol '{protocolName}' registered.");
-
-        var regValue = EdgeRegValue(protocolName);
-        SetRegistryKey(Registry.LocalMachine.Name, regValue.Path, regValue.Key, regValue.Value);
-
-        regValue = ChromeRegValue(protocolName);
-        SetRegistryKey(Registry.LocalMachine.Name, regValue.Path, regValue.Key, regValue.Value);
+        AddProtocolSettings(protocolName, logEvent, appLauncherLocation);
+        AddBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
+        AddBrowserSettings(ChromeRegValue(protocolName), "Chrome", logEvent);
     }
 
     public static void UnRegister(string protocolName, Action<string> logEvent)
     {
-        Registry.ClassesRoot.DeleteSubKeyTree(protocolName, false);
-        logEvent($"Protocol '{protocolName}' unregistered.");
-
-        var regValue = EdgeRegValue(protocolName);
-        var subKey = Registry.LocalMachine.OpenSubKey(regValue.Path, true);
-        subKey?.DeleteValue(regValue.Key, false);
-
-        regValue = ChromeRegValue(protocolName);
-        subKey = Registry.LocalMachine.OpenSubKey(regValue.Path, true);
-        subKey?.DeleteValue(regValue.Key, false);
+        RemoveProtocolSettings(protocolName, logEvent);
+        RemoveBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
+        RemoveBrowserSettings(ChromeRegValue(protocolName), "Chrome", logEvent);
     }
 
     public static void Launch(LaunchApplication launchApplication, Action<string> logEvent)
     {
         var processStartParams = new ProcessStartParams(launchApplication.Command);
         Process.Run(processStartParams, launchApplication.Args, logEvent);
+    }
+
+    private static void AddProtocolSettings(string protocolName, Action<string> logEvent, string appLauncherLocation)
+    {
+        foreach (var (path, key, value) in ProtocolRegValues(protocolName, appLauncherLocation))
+            SetRegistryKey(Registry.ClassesRoot.Name, path, key, value);
+        logEvent($"Protocol '{protocolName}' registered.");
+    }
+
+    private static void AddBrowserSettings((string Path, string Key, string Value) regValue, string browser, Action<string> logEvent)
+    {
+        SetRegistryKey(Registry.LocalMachine.Name, regValue.Path, regValue.Key, regValue.Value);
+        logEvent($"Browser settings for '{browser}' registered.");
+    }
+
+    private static void RemoveProtocolSettings(string protocolName, Action<string> logEvent)
+    {
+        Registry.ClassesRoot.DeleteSubKeyTree(protocolName, false);
+        logEvent($"Protocol '{protocolName}' unregistered.");
+    }
+
+    private static void RemoveBrowserSettings((string Path, string Key, string Value) regValue, string browser, Action<string> logEvent)
+    {
+        var subKey = Registry.LocalMachine.OpenSubKey(regValue.Path, true);
+        subKey?.DeleteValue(regValue.Key, false);
+        logEvent($"Browser settings for '{browser}' unregistered.");
     }
 
     private static void SetRegistryKey(string baseKey, string path, string? key, string value)
