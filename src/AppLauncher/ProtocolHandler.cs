@@ -17,12 +17,12 @@ internal static class ProtocolHandler
     }
 
     private static (string Path, string Key, string Value) EdgeRegValue(string protocolName) =>
-        (@"SOFTWARE\Policies\Microsoft\Edge", "AutoLaunchProtocolsFromOrigins", AllowedOriginsValue(protocolName));
+        (@"SOFTWARE\Policies\Microsoft\Edge\URLAllowlist", UrlAllowListEntryIndex, $"{protocolName}://*");
 
     private static (string Path, string Key, string Value) ChromeRegValue(string protocolName) =>
-        (@"SOFTWARE\Policies\Google\Chrome\URLAllowlist", UrlAllowListEntryIndex, $"{protocolName}://");
+        (@"SOFTWARE\Policies\Google\Chrome\URLAllowlist", UrlAllowListEntryIndex, $"{protocolName}://*");
 
-    private static string AllowedOriginsValue(string protocolName) => "[{\"allowed_origins\":[\"*\"],\"protocol\":\"" + protocolName + "\"}]";
+    //private static string AllowedOriginsValue(string protocolName) => "[{\"allowed_origins\":[\"*\"],\"protocol\":\"" + protocolName + "\"}]";
 
     public static void Register(string protocolName, Action<string> logEvent)
     {
