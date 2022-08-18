@@ -10,9 +10,19 @@ public static class WindowsEventLog
 
     public static void LogEvent(string message)
     {
+        Log(EventLogEntryType.Information, message);
+    }
+
+    public static void LogError(string message)
+    {
+        Log(EventLogEntryType.Error, message);
+    }
+
+    private static void Log(EventLogEntryType eventLogEntryType, string message)
+    {
         using var eventLog = new EventLog("Application");
         eventLog.Source = CurrentAppName;
-        eventLog.WriteEntry(message, EventLogEntryType.Information, EventId);
+        eventLog.WriteEntry(message, eventLogEntryType, EventId);
     }
 
     public static void CreateEventSource()

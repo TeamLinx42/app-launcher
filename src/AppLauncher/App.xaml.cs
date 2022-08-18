@@ -14,7 +14,7 @@ public partial class App
             }
             catch (Exception exception)
             {
-                WindowsEventLog.LogEvent($"Error: {exception}");
+                WindowsEventLog.LogError($"Error: {exception}");
                 throw;
             }
         };

@@ -10,7 +10,7 @@ public partial class App
         var launchArgs = eventArgs.Validate(WindowsEventLog.LogEvent);
         if (!launchArgs.IsValid)
         {
-            WindowsEventLog.LogEvent("Invalid command".CreateMessage(eventArgs.Args));
+            WindowsEventLog.LogError("Invalid command".CreateMessage(eventArgs.Args));
             Shutdown(launchArgs.ExitCode);
             return;
         }
