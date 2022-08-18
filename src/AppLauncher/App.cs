@@ -10,7 +10,7 @@ public partial class App
         var launchArgs = eventArgs.Validate(WindowsEventLog.LogEvent);
         if (!launchArgs.IsValid)
         {
-            WindowsEventLog.LogEvent("Invalid arguments".CreateMessage(eventArgs.Args));
+            WindowsEventLog.LogEvent("Invalid command".CreateMessage(eventArgs.Args));
             Shutdown(launchArgs.ExitCode);
             return;
         }
@@ -47,8 +47,6 @@ public partial class App
                 Shutdown(launchArgs.ExitCode);
                 break;
 
-            case LaunchCommandType.Undefined:
-            case LaunchCommandType.Unknown:
             default:
                 throw new ArgumentOutOfRangeException(nameof(launchArgs.LaunchApplication.Type), launchArgs.LaunchApplication.Type, "Unhandled command.");
         }

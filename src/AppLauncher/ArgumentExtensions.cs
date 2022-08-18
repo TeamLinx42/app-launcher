@@ -35,7 +35,7 @@ internal static class ArgumentExtensions
             return new LaunchArgs(true, ExitCode.Success, launchApplication);
         }
 
-        return new LaunchArgs(true, ExitCode.UnknownCommand);
+        return new LaunchArgs(false, ExitCode.UnknownCommand);
     }
 
     public static bool IsAdministrativeCommand(this LaunchArgs launchArgs) => launchArgs.LaunchApplication.Type is LaunchCommandType.Register or LaunchCommandType.UnRegister;
