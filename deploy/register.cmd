@@ -1,0 +1,1 @@
+bin\AppLauncher.exe register tlx
