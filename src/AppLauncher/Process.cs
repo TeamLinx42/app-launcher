@@ -47,7 +47,8 @@ internal static class Process
             foreach (var arg in args)
                 processStartInfo.ArgumentList.Add(arg);
 
-        var message = "Launching".CreateMessage(processStartInfo.FileName).Join(processStartInfo.ArgumentList);
+        var message = "Launching".CreateMessage(processStartInfo.FileName)
+            .Join("with args: ", processStartInfo.ArgumentList);
         logEvent(message);
 
         System.Diagnostics.Process.Start(processStartInfo);
