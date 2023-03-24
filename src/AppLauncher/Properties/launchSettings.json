@@ -16,6 +16,10 @@
       "commandName": "Project",
       "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe?test?Hallo Welt!\""
     },
+    "TestLaunch1": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!\""
+    },
     "TestLaunch2": {
       "commandName": "Project",
       "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22/?test?Hallo%20Welt!"
@@ -26,7 +30,7 @@
     },
     "TestLaunch4": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe\" \"test x y z\""
+      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe\"\" test x y z\""
     }
   }
 }
