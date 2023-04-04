@@ -31,7 +31,7 @@ internal static class ProtocolDecoder
     {
         var splitUri = Regex.Split(arg, UriProtocolPattern);
         var strippedUri = splitUri[3];
-        return TrimDoubleQuotes(strippedUri);
+        return strippedUri;
     }
 
     internal static LaunchApplication DecodeApplication(string encodedProtocol)
@@ -50,10 +50,10 @@ internal static class ProtocolDecoder
     internal static (string Path, IEnumerable<string> Args) DecodeArgs(string decodedProtocol)
     {
         var split = decodedProtocol.Split("?");
-        var path = TrimDoubleQuotes(split[0].TrimEnd('/'));
-        var args = split.Skip(1).Select(TrimDoubleQuotes);
+        var path = split[0].TrimEnd('/').TrimEnd('\\');
+        var args = split.Skip(1);
         return (path, args);
     }
 
-    private static string TrimDoubleQuotes(string text) => text.TrimStart('"').TrimEnd('"');
+    private static string TrimDoubleQuotes(string text) => text.TrimStart('\"').TrimEnd('\"');
 }

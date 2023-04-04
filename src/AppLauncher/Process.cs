@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Principal;
 
 namespace AppLauncher;
@@ -38,7 +39,7 @@ internal static class Process
     {
         var processStartInfo = new ProcessStartInfo
         {
-            FileName = $"\"{processStartParams.PathToApplication}\"",
+            FileName = processStartParams.PathToApplication,
             CreateNoWindow = processStartParams.CreateNoWindow,
             WindowStyle = processStartParams.ProcessWindowStyle
         };
@@ -46,6 +47,8 @@ internal static class Process
         if (args != null)
             foreach (var arg in args)
                 processStartInfo.ArgumentList.Add(arg);
+
+        processStartInfo.UseShellExecute = !processStartInfo.ArgumentList.Any();
 
         var message = "Launching".CreateMessage(processStartInfo.FileName)
             .Join("with args: ", processStartInfo.ArgumentList);

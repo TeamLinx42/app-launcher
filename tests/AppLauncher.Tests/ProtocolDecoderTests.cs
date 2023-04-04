@@ -54,10 +54,10 @@ public class ProtocolDecoderTests
     [InlineData("xyz://", "")]
     [InlineData("123://", "")]
     [InlineData("xyz://abc", "abc")]
-    [InlineData("xyz://\"abc\"", "abc")]
+    [InlineData("xyz://\"abc\"", "\"abc\"")]
     [InlineData("xyz://abc?def?ghi", "abc?def?ghi")]
-    [InlineData("tlx://\"a:\\b c\\d e f.exe?arg with space?arg2?333\"", "a:\\b c\\d e f.exe?arg with space?arg2?333")]
-    [InlineData("\"tlx://a:\\b c\\d e f.exe?arg with space?arg2?333\"", "a:\\b c\\d e f.exe?arg with space?arg2?333")]
+    [InlineData("tlx://\"a:\\b c\\d e f.exe?arg with space?arg2?333\"", "\"a:\\b c\\d e f.exe?arg with space?arg2?333\"")]
+    [InlineData("tlx://a:\\b c\\d e f.exe?arg with space?arg2?333", "a:\\b c\\d e f.exe?arg with space?arg2?333")]
     [InlineData("tlx://a%3a%5cb+c%5cd+e+f.exe%3farg+with+space%3farg2%3f333", "a%3a%5cb+c%5cd+e+f.exe%3farg+with+space%3farg2%3f333")]
     [InlineData("tlx://%22a%3a%5cb+c%5cd+e+f.exe%3farg+with+space%3farg2%3f333%22", "%22a%3a%5cb+c%5cd+e+f.exe%3farg+with+space%3farg2%3f333%22")]
     public void StripProtocol(string arg, string expected)
@@ -190,7 +190,12 @@ public class ProtocolDecoderTests
         new[] { "test", "Hallo Welt!" }
     )]
     [InlineData(
-        "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22/?test?Hallo%20Welt!",
+        "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe/?test?Hallo%20Welt!%22",
+        "C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe",
+        new[] { "test", "Hallo Welt!" }
+    )]
+    [InlineData(
+        "tlx://C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe?test?Hallo%20Welt!",
         "C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe",
         new[] { "test", "Hallo Welt!" }
     )]

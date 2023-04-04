@@ -12,25 +12,70 @@
       "commandName": "Project",
       "commandLineArgs": "test Hallo Welt!"
     },
+    "Test Document1": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://Z:\\Test\\Test.xlsx"
+    },
+    "Test Document2": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://\"Z:\\Test\\Filename with spaces.xlsx\""
+    },
+    "Test Document3": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://\"Z:\\Test\\Folder with spaces\\Test.xlsx\""
+    },
+    "Test Document4": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://%5C%5Cdiskstation213%5Cdaten%5CTest%5CTest.xlsx"
+    },
     "TestLaunch": {
       "commandName": "Project",
       "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe?test?Hallo Welt!\""
     },
     "TestLaunch1": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!\""
+      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe?test?x?y?z\""
     },
     "TestLaunch2": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22/?test?Hallo%20Welt!"
+      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!\""
     },
     "TestLaunch3": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe%22%20test%20x%20y%20z/"
+      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!?Bli bla?123\""
     },
     "TestLaunch4": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:\\Tools\\The One And Only App Launcher\\AppLauncher.exe\"\" test x y z\""
+      "commandLineArgs": "tlx://C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe?test?Hallo%20Welt!"
+    },
+    "TestLaunch5": {
+      "commandName": "Project",
+      "commandLineArgs": "tlx://%22C:%5CTools%5CThe%20One%20And%20Only%20App%20Launcher%5CAppLauncher.exe?test?Hallo%20Welt!%22"
     }
   }
 }
+/*
+In Teams-Browser-App getestet:
+
+mailto://frank.rabold@appsphere.com
+file://c:\Tools\TLX.txt
+file://c:\Tools\Report.pdf
+file://Z:\Test\Test.xlsx
+tlx://\\diskstation213\daten\Test\Test.xlsx
+tlx://Z:/Test\Test.xlsx
+tlx://Z:/Test\Filename with spaces.xlsx
+tlx://Z:/Test\Folder with spaces\Test.xlsx
+tlx://c:/Tools\Report.pdf
+tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe?test?Hallo Welt!
+tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe test x y z
+
+
+Besonderheiten in der Teams-Desktop-App:
+
+bei UNC müssen alle Backslashes codiert werden
+tlx://%5C%5Cdiskstation213%5Cdaten%5CTest%5CTest.xlsx
+
+bei Laufwerk muss nach dem Doppelpunkt ein Slash stehen, kein Backslash
+tlx://Z:/Test\Test.xlsx
+
+*/
