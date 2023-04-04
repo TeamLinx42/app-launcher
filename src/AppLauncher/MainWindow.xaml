@@ -10,6 +10,7 @@
         <TextBox x:Name="Command" HorizontalAlignment="Left" Margin="39,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="664"/>
         <Label Content="Parameters:" HorizontalAlignment="Left" Margin="39,77,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="Parameters" HorizontalAlignment="Left" Margin="39,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="664" Height="159"/>
+        <Label x:Name="LabelVersion" Content="v0.0.0" HorizontalAlignment="Left" Margin="736,10,0,0" VerticalAlignment="Top" FontSize="8" Width="54"/>
 
     </Grid>
 </Window>

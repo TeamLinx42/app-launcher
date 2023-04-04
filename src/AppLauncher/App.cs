@@ -5,8 +5,11 @@ namespace AppLauncher;
 
 public partial class App
 {
+    private static readonly Version Version = new(0, 1, 0);
+
     private void ValidateAndHandleCommand(StartupEventArgs eventArgs)
     {
+        WindowsEventLog.LogEvent($"{nameof(AppLauncher)} V{Version} launched with args: {string.Join(',', eventArgs.Args)}");
         var launchArgs = eventArgs.Validate(WindowsEventLog.LogEvent);
         if (!launchArgs.IsValid)
         {
@@ -64,7 +67,7 @@ public partial class App
 
         if (launchArgs.LaunchApplication.Args != null)
             mainWindow.Parameters.Text = string.Join(' ', launchArgs.LaunchApplication.Args);
-
+        mainWindow.LabelVersion.Content = $"v{Version}";
         mainWindow.Show();
     }
 }
