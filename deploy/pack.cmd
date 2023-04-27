@@ -1,3 +1,5 @@
+md AppLauncher
+md AppLauncher\bin
 del AppLauncher\*.* /Q
 del AppLauncher\bin\*.* /Q
 del AppLauncher-win-x64.zip
