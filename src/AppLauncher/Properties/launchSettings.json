@@ -68,7 +68,7 @@ tlx://Z:/Test\Folder with spaces\Test.xlsx
 tlx://c:/Tools\Report.pdf
 tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe?test?Hallo Welt!
 tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe test x y z
-
+tlx://c:/windows\notepad.exe
 
 Besonderheiten in der Teams-Desktop-App:
 
@@ -78,4 +78,6 @@ tlx://%5C%5Cdiskstation213%5Cdaten%5CTest%5CTest.xlsx
 bei Laufwerk muss nach dem Doppelpunkt ein Slash stehen, kein Backslash
 tlx://Z:/Test\Test.xlsx
 
+Besonderheiten in der Teams-Desktop-App bei der IHK:
+Doppelpunkt, alle Slashes und alle Leerzeichen müssen codiert werden
 */
