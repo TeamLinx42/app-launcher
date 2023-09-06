@@ -32,6 +32,14 @@ internal static class ArgumentExtensions
             logEvent("Protocol to decode".CreateMessage(args[0]));
             var launchApplication = ProtocolDecoder.Decode(args[0]);
             logEvent($"Decoded protocol: {launchApplication}");
+
+            //Path pathToWhitelist;
+            //if (!WhitelistAdapter.IsValid(launchApplication, pathToWhitelist))
+            //{
+            //    logEvent("error...");
+            //    return new LaunchArgs(false, ExitCode.NotInWhitelist);
+            //}
+
             return new LaunchArgs(true, ExitCode.Success, launchApplication);
         }
 
