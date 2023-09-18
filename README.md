@@ -14,8 +14,8 @@ tlx://Z:/Test\Test.xlsx
 tlx://Z:/Test\Filename with spaces.xlsx
 tlx://Z:/Test\Folder with spaces\Test.xlsx
 tlx://c:/Tools\Report.pdf
-tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe?test?Hallo Welt!
-tlx://C:/Tools\The One And Only App Launcher\AppLauncher.exe test x y z
+tlx://C:/Tools\App Launcher\AppLauncher.exe?test?Hallo Welt!
+tlx://C:/Tools\App Launcher\AppLauncher.exe test x y z
 tlx://c:/windows\notepad.exe
 
 Besonderheiten in der Teams-Desktop-App:
