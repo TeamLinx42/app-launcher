@@ -7,6 +7,8 @@ namespace AppLauncher;
 internal static class ProtocolHandler
 {
     private const string UrlAllowListEntryIndex = "99";
+    private const string AppRegPath = "SOFTWARE\\AppLauncher";
+    private const string WhitelistFilePathRegKey = "WhitelistFilePath";
 
     private static IEnumerable<(string, string?, string )> ProtocolRegValues(string protocolName, string appLauncherLocation)
     {
@@ -24,14 +26,14 @@ internal static class ProtocolHandler
 
     //private static string AllowedOriginsValue(string protocolName) => "[{\"allowed_origins\":[\"*\"],\"protocol\":\"" + protocolName + "\"}]";
 
-    public static void Register(string protocolName, Action<string> logEvent)
+    public static void Register(string protocolName, string whitelistFilePath, Action<string> logEvent)
     {
-        var appLauncherLocation = Process.ExeFileName;
-        if (appLauncherLocation == null) throw new InvalidOperationException("Unable to get AppLauncher location");
+        var appLauncherLocation = Process.ExeFileName ?? throw new InvalidOperationException("Unable to get AppLauncher location");
 
         AddProtocolSettings(protocolName, logEvent, appLauncherLocation);
         AddBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
         AddBrowserSettings(ChromeRegValue(protocolName), "Chrome", logEvent);
+        AddWhitelistSettings(whitelistFilePath, logEvent);
     }
 
     public static void UnRegister(string protocolName, Action<string> logEvent)
@@ -39,12 +41,29 @@ internal static class ProtocolHandler
         RemoveProtocolSettings(protocolName, logEvent);
         RemoveBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
         RemoveBrowserSettings(ChromeRegValue(protocolName), "Chrome", logEvent);
+        RemoveWhitelistSettings(logEvent);
     }
 
     public static void Launch(LaunchApplication launchApplication, Action<string> logEvent)
     {
         var processStartParams = new ProcessStartParams(launchApplication.Command);
         Process.Run(processStartParams, launchApplication.Args, logEvent);
+    }
+
+    public static string? GetWhitelistFilePath() => GetRegistryValue(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, string.Empty);
+
+    private static void AddWhitelistSettings(string whitelistFilePath, Action<string> logEvent)
+    {
+        if (string.IsNullOrEmpty(whitelistFilePath)) return;
+
+        SetRegistryKey(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, whitelistFilePath);
+        logEvent($"Whitelist '{whitelistFilePath}' registered.");
+    }
+
+    private static void RemoveWhitelistSettings(Action<string> logEvent)
+    {
+        Registry.LocalMachine.DeleteSubKeyTree(AppRegPath);
+        logEvent("Whitelist unregistered.");
     }
 
     private static void AddProtocolSettings(string protocolName, Action<string> logEvent, string appLauncherLocation)
@@ -77,4 +96,6 @@ internal static class ProtocolHandler
     {
         Registry.SetValue($"{baseKey}\\{path}", key, value);
     }
+
+    private static string? GetRegistryValue(string baseKey, string path, string? key, string defaultValue) => (string?)Registry.GetValue($"{baseKey}\\{path}", key, defaultValue);
 }
