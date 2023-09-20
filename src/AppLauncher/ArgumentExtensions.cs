@@ -14,9 +14,12 @@ internal static class ArgumentExtensions
         if (args.Length < 1) return new LaunchArgs(false, ExitCode.MissingArgs);
 
         if (IsKnownCommand(args, "register"))
-            return args.Length == 2
-                ? new LaunchArgs(true, ExitCode.Success, LaunchApplication.Register(args[1]))
-                : new LaunchArgs(false, ExitCode.MissingProtocolNameArg);
+            return args.Length switch
+            {
+                2 => new LaunchArgs(true, ExitCode.Success, LaunchApplication.Register(args[1])),
+                3 => new LaunchArgs(true, ExitCode.Success, LaunchApplication.Register(args[1], args[2])),
+                _ => new LaunchArgs(false, ExitCode.MissingProtocolNameArg)
+            };
 
         if (IsKnownCommand(args, "unregister"))
             return args.Length == 2

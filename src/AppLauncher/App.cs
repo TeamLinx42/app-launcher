@@ -32,7 +32,7 @@ public partial class App
         {
             case LaunchCommandType.Register:
                 WindowsEventLog.CreateEventSource();
-                ProtocolHandler.Register(launchArgs.LaunchApplication.Command, null!, WindowsEventLog.LogEvent);
+                ProtocolHandler.Register(launchArgs.LaunchApplication, WindowsEventLog.LogEvent);
                 Shutdown();
                 break;
 

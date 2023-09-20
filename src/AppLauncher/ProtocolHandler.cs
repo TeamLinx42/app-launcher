@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Win32;
 
 namespace AppLauncher;
@@ -26,9 +27,11 @@ internal static class ProtocolHandler
 
     //private static string AllowedOriginsValue(string protocolName) => "[{\"allowed_origins\":[\"*\"],\"protocol\":\"" + protocolName + "\"}]";
 
-    public static void Register(string protocolName, string whitelistFilePath, Action<string> logEvent)
+    public static void Register(LaunchApplication launchApplication, Action<string> logEvent)
     {
         var appLauncherLocation = Process.ExeFileName ?? throw new InvalidOperationException("Unable to get AppLauncher location");
+        var protocolName = launchApplication.Command;
+        var whitelistFilePath = launchApplication.Args?.FirstOrDefault();
 
         AddProtocolSettings(protocolName, logEvent, appLauncherLocation);
         AddBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
@@ -52,7 +55,7 @@ internal static class ProtocolHandler
 
     public static string? GetWhitelistFilePath() => GetRegistryValue(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, string.Empty);
 
-    private static void AddWhitelistSettings(string whitelistFilePath, Action<string> logEvent)
+    private static void AddWhitelistSettings(string? whitelistFilePath, Action<string> logEvent)
     {
         if (string.IsNullOrEmpty(whitelistFilePath)) return;
 

@@ -2,7 +2,8 @@
   "profiles": {
     "Register": {
       "commandName": "Project",
-      "commandLineArgs": "register tlx"
+      //"commandLineArgs": "register tlx"
+      "commandLineArgs": "register tlx \"C:\\Tools\\App Launcher\\Whitelist.txt\""
     },
     "Unregister": {
       "commandName": "Project",
