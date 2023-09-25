@@ -7,6 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLauncher", "src\AppLaunc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLauncher.Tests", "tests\AppLauncher.Tests\AppLauncher.Tests.csproj", "{9DF466C9-3A10-4EBC-8B12-FEE927D4BF92}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE7AD77F-524D-4C76-8481-10B6D235A8C1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F9335501-5AF8-43DE-B9B9-09056FCBB64B}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\.gitignore = deploy\.gitignore
+		deploy\pack.cmd = deploy\pack.cmd
+		deploy\register.cmd = deploy\register.cmd
+		deploy\unregister.cmd = deploy\unregister.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F9335501-5AF8-43DE-B9B9-09056FCBB64B} = {BE7AD77F-524D-4C76-8481-10B6D235A8C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F998AB15-013E-4597-B5BD-7C879A6C6A1C}

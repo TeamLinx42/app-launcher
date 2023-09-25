@@ -1,1 +1,1 @@
-bin\AppLauncher.exe register tlx
+bin\AppLauncher.exe register tlx %1
