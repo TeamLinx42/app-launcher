@@ -31,27 +31,27 @@
     },
     "TestLaunch": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:\\Tools\\App Launcher\\AppLauncher.exe?test?Hallo Welt!\""
+      "commandLineArgs": "tlx://\"C:\\Tools\\App Launcher\\bin\\AppLauncher.exe?test?Hallo Welt!\""
     },
     "TestLaunch1": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:\\Tools\\App Launcher\\AppLauncher.exe?test?x?y?z\""
+      "commandLineArgs": "tlx://\"C:\\Tools\\App Launcher\\bin\\AppLauncher.exe?test?x?y?z\""
     },
     "TestLaunch2": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!\""
+      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/bin/AppLauncher.exe?test?Hallo Welt!\""
     },
     "TestLaunch3": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/AppLauncher.exe?test?Hallo Welt!?Bli bla?123\""
+      "commandLineArgs": "tlx://\"C:/Tools/App Launcher/bin/AppLauncher.exe?test?Hallo Welt!?Bli bla?123\""
     },
     "TestLaunch4": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://C:%5CTools%5CApp%20Launcher%5CAppLauncher.exe?test?Hallo%20Welt!"
+      "commandLineArgs": "tlx://C:%5CTools%5CApp%20Launcher%5Cbin%5CAppLauncher.exe?test?Hallo%20Welt!"
     },
     "TestLaunch5": {
       "commandName": "Project",
-      "commandLineArgs": "tlx://%22C:%5CTools%5CApp%20Launcher%5CAppLauncher.exe?test?Hallo%20Welt!%22"
+      "commandLineArgs": "tlx://%22C:%5CTools\\App%20Launcher\\bin%5CAppLauncher.exe?test?Hallo%20Welt!%22"
     },
     "Notepad": {
       "commandName": "Project",
