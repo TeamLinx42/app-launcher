@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppLauncher.Whitelist;
 using Microsoft.Win32;
 
 namespace AppLauncher;
@@ -31,7 +32,7 @@ internal static class ProtocolHandler
     {
         var appLauncherLocation = Process.ExeFileName ?? throw new InvalidOperationException("Unable to get AppLauncher location");
         var protocolName = launchApplication.Command;
-        var whitelistFilePath = launchApplication.Args?.FirstOrDefault();
+        var whitelistFilePath = new WhitelistFilePath(launchApplication.Args?.FirstOrDefault());
 
         AddProtocolSettings(protocolName, logEvent, appLauncherLocation);
         AddBrowserSettings(EdgeRegValue(protocolName), "Edge", logEvent);
@@ -53,13 +54,13 @@ internal static class ProtocolHandler
         Process.Run(processStartParams, launchApplication.Args, logEvent);
     }
 
-    public static string? GetWhitelistFilePath() => GetRegistryValue(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, string.Empty);
+    public static WhitelistFilePath GetWhitelistFilePath() => new(GetRegistryValue(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, string.Empty));
 
-    private static void AddWhitelistSettings(string? whitelistFilePath, Action<string> logEvent)
+    private static void AddWhitelistSettings(WhitelistFilePath whitelistFilePath, Action<string> logEvent)
     {
-        if (string.IsNullOrEmpty(whitelistFilePath)) return;
+        if (!whitelistFilePath.IsConfigured) return;
 
-        SetRegistryKey(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, whitelistFilePath);
+        SetRegistryKey(Registry.LocalMachine.Name, AppRegPath, WhitelistFilePathRegKey, whitelistFilePath.Path);
         logEvent($"Whitelist '{whitelistFilePath}' registered.");
     }
 
@@ -95,8 +96,11 @@ internal static class ProtocolHandler
         logEvent($"Browser settings for '{browser}' unregistered.");
     }
 
-    private static void SetRegistryKey(string baseKey, string path, string? key, string value)
+    private static void SetRegistryKey(string baseKey, string path, string? key, string? value)
     {
+        if (value == null)
+            throw new ArgumentNullException(nameof(value));
+
         Registry.SetValue($"{baseKey}\\{path}", key, value);
     }
 

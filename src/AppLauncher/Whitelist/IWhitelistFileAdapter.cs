@@ -2,7 +2,7 @@
 
 internal interface IWhitelistFileAdapter
 {
-    public bool WhitelistExists(string pathToWhitelist);
+    public bool WhitelistExists(string? filePath);
 
-    public Whitelist ReadWhitelist(string pathToWhitelist);
+    public string[] ReadWhitelist(string? filePath);
 }

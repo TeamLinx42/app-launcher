@@ -4,21 +4,22 @@ using System.Linq;
 
 namespace AppLauncher.Whitelist;
 
-internal class WhitelistProvider
+internal static class WhitelistProvider
 {
     public static bool IsValid(LaunchApplication launchApplication, Whitelist whitelist) =>
+        !whitelist.IsConfigured ||
         Contains(launchApplication.Command, whitelist) ||
         ContainsFullPath(launchApplication.Command, whitelist);
 
-    public static Whitelist ReadWhitelist(string? pathToWhitelist, IWhitelistFileAdapter whitelistFileAdapter)
+    public static Whitelist ReadWhitelist(WhitelistFilePath whitelistFilePath, IWhitelistFileAdapter whitelistFileAdapter)
     {
-        if (string.IsNullOrEmpty(pathToWhitelist))
-            return new Whitelist(Array.Empty<string>());
+        if (!whitelistFilePath.IsConfigured)
+            return Whitelist.NotConfigured;
 
-        if (!whitelistFileAdapter.WhitelistExists(pathToWhitelist))
-            throw new FileNotFoundException("Registered whitelist not found.", pathToWhitelist);
+        if (!whitelistFileAdapter.WhitelistExists(whitelistFilePath.Path))
+            throw new FileNotFoundException("Registered whitelist not found.", whitelistFilePath.Path);
 
-        return whitelistFileAdapter.ReadWhitelist(pathToWhitelist);
+        return new Whitelist(whitelistFileAdapter.ReadWhitelist(whitelistFilePath.Path));
     }
 
     private static bool Contains(string command, Whitelist whitelist) =>

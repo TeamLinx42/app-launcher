@@ -1,10 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace AppLauncher.Whitelist;
 
 internal class WhitelistFileAdapter : IWhitelistFileAdapter
 {
-    public bool WhitelistExists(string pathToWhitelist) => File.Exists(pathToWhitelist);
+    public string[] ReadWhitelist(string? filePath)
+    {
+        if (string.IsNullOrEmpty(filePath))
+            throw new ArgumentNullException();
 
-    public Whitelist ReadWhitelist(string pathToWhitelist) => new(File.ReadAllLines(pathToWhitelist));
+        return File.ReadAllLines(filePath);
+    }
+
+    public bool WhitelistExists(string? filePath) => File.Exists(filePath);
 }

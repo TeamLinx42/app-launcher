@@ -37,25 +37,27 @@ internal static class ArgumentExtensions
             var launchApplication = ProtocolDecoder.Decode(args[0]);
             logEvent($"Decoded protocol: {launchApplication}");
 
-            if (!IsWhitelistedApp(launchApplication))
-            {
-                logEvent("App is not whitelisted".CreateMessage(launchApplication.Command));
-                return new LaunchArgs(false, ExitCode.NotInWhitelist);
-            }
+            var whitelistFilePath = ProtocolHandler.GetWhitelistFilePath();
+            if (IsWhitelistedApp(launchApplication, whitelistFilePath))
+                return new LaunchArgs(true, ExitCode.Success, launchApplication);
 
-            return new LaunchArgs(true, ExitCode.Success, launchApplication);
+            logEvent("App is not whitelisted".CreateMessage(launchApplication.Command));
+            return new LaunchArgs(false, ExitCode.NotInWhitelist);
         }
 
         return new LaunchArgs(false, ExitCode.UnknownCommand);
     }
 
-    private static bool IsWhitelistedApp(LaunchApplication launchApplication) => WhitelistProvider.IsValid(launchApplication, GetWhitelist());
-
-    private static Whitelist.Whitelist GetWhitelist()
+    private static bool IsWhitelistedApp(LaunchApplication launchApplication, WhitelistFilePath whitelistFilePath)
     {
         IWhitelistFileAdapter whitelistFileAdapter = new WhitelistFileAdapter();
-        var pathToWhitelist = ProtocolHandler.GetWhitelistFilePath();
-        return WhitelistProvider.ReadWhitelist(pathToWhitelist, whitelistFileAdapter);
+        return IsValid(launchApplication, whitelistFilePath, whitelistFileAdapter);
+    }
+
+    internal static bool IsValid(LaunchApplication launchApplication, WhitelistFilePath whitelistFilePath, IWhitelistFileAdapter whitelistFileAdapter)
+    {
+        var whitelist = WhitelistProvider.ReadWhitelist(whitelistFilePath, whitelistFileAdapter);
+        return WhitelistProvider.IsValid(launchApplication, whitelist);
     }
 
     public static bool IsAdministrativeCommand(this LaunchArgs launchArgs) => launchArgs.LaunchApplication.Type is LaunchCommandType.Register or LaunchCommandType.UnRegister;
