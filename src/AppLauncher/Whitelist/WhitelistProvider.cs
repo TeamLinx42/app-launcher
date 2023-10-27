@@ -7,18 +7,19 @@ namespace AppLauncher.Whitelist;
 internal static class WhitelistProvider
 {
     public static bool IsValid(LaunchApplication launchApplication, Whitelist whitelist) =>
+        !whitelist.IsConfigured ||
         Contains(launchApplication.Command, whitelist) ||
         ContainsFullPath(launchApplication.Command, whitelist);
 
     public static Whitelist ReadWhitelist(WhitelistFilePath whitelistFilePath, IWhitelistFileAdapter whitelistFileAdapter)
     {
         if (!whitelistFilePath.IsConfigured)
-            throw new ArgumentNullException(nameof(whitelistFilePath));
+            return Whitelist.NotConfigured;
 
-        if (!whitelistFileAdapter.WhitelistExists(whitelistFilePath))
+        if (!whitelistFileAdapter.WhitelistExists(whitelistFilePath.Path))
             throw new FileNotFoundException("Registered whitelist not found.", whitelistFilePath.Path);
 
-        return whitelistFileAdapter.ReadWhitelist(whitelistFilePath);
+        return new Whitelist(whitelistFileAdapter.ReadWhitelist(whitelistFilePath.Path));
     }
 
     private static bool Contains(string command, Whitelist whitelist) =>

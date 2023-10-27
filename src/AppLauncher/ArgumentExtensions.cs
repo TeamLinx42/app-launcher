@@ -38,7 +38,7 @@ internal static class ArgumentExtensions
             logEvent($"Decoded protocol: {launchApplication}");
 
             var whitelistFilePath = ProtocolHandler.GetWhitelistFilePath();
-            if (!whitelistFilePath.IsConfigured || IsWhitelistedApp(launchApplication, whitelistFilePath))
+            if (IsWhitelistedApp(launchApplication, whitelistFilePath))
                 return new LaunchArgs(true, ExitCode.Success, launchApplication);
 
             logEvent("App is not whitelisted".CreateMessage(launchApplication.Command));
@@ -48,13 +48,16 @@ internal static class ArgumentExtensions
         return new LaunchArgs(false, ExitCode.UnknownCommand);
     }
 
-    private static bool IsWhitelistedApp(LaunchApplication launchApplication, WhitelistFilePath whitelistFilePath) =>
-        WhitelistProvider.IsValid(launchApplication, GetWhitelist(whitelistFilePath));
-
-    private static Whitelist.Whitelist GetWhitelist(WhitelistFilePath whitelistFilePath)
+    private static bool IsWhitelistedApp(LaunchApplication launchApplication, WhitelistFilePath whitelistFilePath)
     {
         IWhitelistFileAdapter whitelistFileAdapter = new WhitelistFileAdapter();
-        return WhitelistProvider.ReadWhitelist(whitelistFilePath, whitelistFileAdapter);
+        return IsValid(launchApplication, whitelistFilePath, whitelistFileAdapter);
+    }
+
+    internal static bool IsValid(LaunchApplication launchApplication, WhitelistFilePath whitelistFilePath, IWhitelistFileAdapter whitelistFileAdapter)
+    {
+        var whitelist = WhitelistProvider.ReadWhitelist(whitelistFilePath, whitelistFileAdapter);
+        return WhitelistProvider.IsValid(launchApplication, whitelist);
     }
 
     public static bool IsAdministrativeCommand(this LaunchArgs launchArgs) => launchArgs.LaunchApplication.Type is LaunchCommandType.Register or LaunchCommandType.UnRegister;

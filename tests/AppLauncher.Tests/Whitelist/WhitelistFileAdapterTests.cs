@@ -8,26 +8,26 @@ public class WhitelistFileAdapterTests
     [Fact]
     public void ReadWhitelist_NullPath_Exception()
     {
+        // Arrange
         var sut = new WhitelistFileAdapter();
-        var whitelistFilePath = new WhitelistFilePath(null);
 
         // Act
-        var actual = () => sut.ReadWhitelist(whitelistFilePath);
+        var actual = () => sut.ReadWhitelist(null);
 
         // Assert
-        actual.Should().Throw<InvalidOperationException>();
+        actual.Should().Throw<ArgumentNullException>();
     }
 
     [Fact]
     public void ReadWhitelist_EmptyPath_Exception()
     {
+        // Arrange
         var sut = new WhitelistFileAdapter();
-        var whitelistFilePath = new WhitelistFilePath(string.Empty);
 
         // Act
-        var actual = () => sut.ReadWhitelist(whitelistFilePath);
+        var actual = () => sut.ReadWhitelist(string.Empty);
 
         // Assert
-        actual.Should().Throw<InvalidOperationException>();
+        actual.Should().Throw<ArgumentNullException>();
     }
 }

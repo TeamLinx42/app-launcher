@@ -5,13 +5,13 @@ namespace AppLauncher.Whitelist;
 
 internal class WhitelistFileAdapter : IWhitelistFileAdapter
 {
-    public bool WhitelistExists(WhitelistFilePath whitelistFilePath) => File.Exists(whitelistFilePath.Path);
-
-    public Whitelist ReadWhitelist(WhitelistFilePath whitelistFilePath)
+    public string[] ReadWhitelist(string? filePath)
     {
-        if (whitelistFilePath.Path == null || !whitelistFilePath.IsConfigured)
-            throw new InvalidOperationException("Path to whitelist not configured.");
+        if (string.IsNullOrEmpty(filePath))
+            throw new ArgumentNullException();
 
-        return new Whitelist(File.ReadAllLines(whitelistFilePath.Path));
+        return File.ReadAllLines(filePath);
     }
+
+    public bool WhitelistExists(string? filePath) => File.Exists(filePath);
 }
